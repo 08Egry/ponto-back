@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.example.controller.entity.Administrador;
 import com.example.controller.entity.Funcionario;
+import com.example.controller.repository.AdministradorRepository;
 import com.example.controller.repository.RegistroRepository;
 import com.example.controller.service.AdministradorService;
 // import com.example.controller.service.CriptografarSenhas;
@@ -25,7 +26,7 @@ public class AdministradorController {
     private AdministradorService administradorService;
 
     @Autowired
-    private RegistroRepository registroRepository;
+    private AdministradorRepository administradorRepository;
 
     // @Autowired
     // private CriptografarSenhas criptografarSenhas;
@@ -50,15 +51,20 @@ public class AdministradorController {
         return ResponseEntity.ok(administrador);
     }
 
-    @GetMapping("/perfil")
-    public ResponseEntity<List<Funcionario>> getAllProducts() {
-        return ResponseEntity.status(HttpStatus.OK).body(registroRepository.findAll());
-    }
+    // @GetMapping("/ver-ponto")
+    // public ResponseEntity<List<Funcionario>> getAllProducts() {
+    //     return ResponseEntity.status(HttpStatus.OK).body(registroRepository.findAll());
+    // }
 
     @PostMapping("/criar-usuario")
     public ResponseEntity<Administrador> createAdministrador(@RequestBody Administrador administrador) {
         // administrador.setSenha(criptografarSenhas.criptografar(administrador.getSenha()));
         Administrador savedAdmin = administradorService.saveAdministrador(administrador);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedAdmin);
+    }
+
+    @GetMapping("/ver-usuarios")
+    public ResponseEntity<List<Administrador>> getAdministrador() {
+        return ResponseEntity.status(HttpStatus.OK).body(administradorRepository.findAll());
     }
 }

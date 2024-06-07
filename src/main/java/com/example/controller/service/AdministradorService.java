@@ -24,6 +24,5 @@ public class AdministradorService {
     public Administrador findByNome(String nome) {
         return administradorRepository.findByNome(nome);
     }
-
-    // Outros métodos de serviço...
+    
 }
